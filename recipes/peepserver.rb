@@ -54,20 +54,20 @@ namespace :peepcode do
   task :copy_config_files do
     run "cp #{shared_path}/config/* #{release_path}/config/"
   end
-  after "deploy:update_code", "peepcode:copy_config_files"
+  # after "deploy:update_code", "peepcode:copy_config_files"
 
   desc "Generate spin script from variables"
   task :generate_spin_script, :roles => :app do
     result = render_erb_template(File.dirname(__FILE__) + "/templates/spin.erb")
     put result, "#{release_path}/script/spin", :mode => 0755
   end
-  after "deploy:update_code", "peepcode:generate_spin_script"
+  # after "deploy:update_code", "peepcode:generate_spin_script"
 
   desc "Make spin script executable"
   task :make_spin_script_executable, :roles => :app do
     run "cd #{current_path} && chmod +x script/spin"
   end
-  before "deploy:start", "peepcode:make_spin_script_executable"
+  # before "deploy:start", "peepcode:make_spin_script_executable"
 
   desc "Create shared/config directory and default database.yml."
   task :create_shared_config do
@@ -81,7 +81,7 @@ namespace :peepcode do
       inform "Please edit database.yml in the shared directory."
     end
   end
-  after "deploy:setup", "peepcode:create_shared_config"
+  # after "deploy:setup", "peepcode:create_shared_config"
 
   namespace :setup do
 
